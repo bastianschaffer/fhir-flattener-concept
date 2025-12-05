@@ -1,6 +1,6 @@
 #!/bin/bash
-RESOURCE_FILE="condition-slice/condition.json"
-VIEW_DEF_FILE="condition-slice/viewDefinition.json"
+VIEW_DEF_FILE="$1"
+RESOURCE_FILE="$2"
 
 
 parameter() {

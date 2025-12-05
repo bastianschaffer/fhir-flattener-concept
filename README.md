@@ -9,7 +9,7 @@ docker run ghcr.io/medizininformatik-initiative/fhir-flattener:0.1.0-alpha.2
 ./request-flattening.sh <path/to/viewdef.json> <path/to/resource.json>
 ```
 
-* Example: `./request-flattening.sh condition-slice/viewDefinition.json condition-slice/condition.json`
+* Example: `./request-flattening.sh condition-slice/viewDefinition-1.json condition-slice/condition.json`
 
 ### Tests
 
