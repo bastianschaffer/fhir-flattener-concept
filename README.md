@@ -1,3 +1,16 @@
+# Procedure
+## Start FHIR Server
+```sh
+docker run ghcr.io/medizininformatik-initiative/fhir-flattener:0.1.0-alpha.2 
+```
+
+## Request Flattening
+```sh
+./request-flattening.sh <path/to/viewdef.json> <path/to/resource.json>
+```
+
+* Example: `./request-flattening.sh condition-slice/viewDefinition.json condition-slice/condition.json`
+
 ### Tests
 
 Was Tester sehen will:

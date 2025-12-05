@@ -1,0 +1,34 @@
+{
+    "resourceType": "Condition",
+    "id": "cond-1",
+    "meta": {
+        "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose|2025.0.1"
+        ]
+    },
+    "code": {
+        "coding": [
+            {
+                "version": "2020",
+                "code": "H83.8",
+                "system": "http://fhir.de/CodeSystem/bfarm/icd-10-gm",
+                "display": "Sonstige näher bezeichnete Krankheiten des Innenohres"
+            },
+            {
+                "code": "I125918",
+                "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
+                "version": "2020"
+            },
+            {
+                "code": "420402",
+                "system": "http://www.orpha.net",
+                "display": "Semicircular canal dehiscence syndrome"
+            },
+            {
+                "code": "420402",
+                "system": "http://www.orpha.net",
+                "display": "Semicircular canal dehiscence syndrome"
+            }
+        ]
+    }
+}
