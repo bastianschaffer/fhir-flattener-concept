@@ -1,0 +1,13 @@
+services:
+  app:
+    #build: .
+    #container_name: fhir-flattener
+    image: ghcr.io/medizininformatik-initiative/fhir-flattener:0.1.0-alpha.2
+
+    volumes:
+      - ./input:/app/input
+      - ./output:/app/output
+    working_dir: /app
+    ports:
+      - "8000:8000"
+

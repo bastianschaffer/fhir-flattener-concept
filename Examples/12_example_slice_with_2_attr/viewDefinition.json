@@ -1,0 +1,38 @@
+{
+  "name": "viewDefinition",
+  "resource": {
+    "name": "conds",
+    "resource": "Condition",
+    "resourceType": "ViewDefinition",
+    "select": [
+      {
+        "column": [
+          {
+            "path": "Condition.id",
+            "name": "id"
+          },
+          {
+            "path": "Condition.code.coding.where(system='http://fhir.de/CodeSystem/bfarm/alpha-id').code",
+            "name": "code_alpha_id"
+          },
+          {
+            "path": "Condition.code.coding.where(system='http://snomed.info/sct').code",
+            "name": "code_sct"
+          }
+        ]
+      },
+      {
+        "column": [
+          {
+            "path": "Condition.bodySite.coding.where(system='http://snomed.info/sct').code",
+            "name": "bodySite_sct"
+          },
+          {
+            "path": "Condition.bodySite.coding.where(system='http://terminology.hl7.org/CodeSystem/icd-o-3').code",
+            "name": "bodySite_icd_o_3"
+          }
+        ]
+      }
+    ]
+  }
+}

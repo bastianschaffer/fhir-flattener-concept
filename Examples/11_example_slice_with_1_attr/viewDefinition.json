@@ -1,0 +1,34 @@
+{
+  "name": "viewDefinition",
+  "resource": {
+    "name": "conds",
+    "resource": "Condition",
+    "resourceType": "ViewDefinition",
+    "select": [
+      {
+        "column": [
+          {
+            "path": "Condition.id",
+            "name": "id"
+          },
+          {
+            "path": "Condition.code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').code",
+            "name": "code_icd_10"
+          },
+          {
+            "path": "Condition.code.coding.where(system='http://fhir.de/CodeSystem/bfarm/alpha-id').code",
+            "name": "code_alpha_id"
+          },
+          {
+            "path": "Condition.code.coding.where(system='http://snomed.info/sct').code",
+            "name": "code_sct"
+          },
+          {
+            "path": "Condition.code.coding.where(system='http://orphanet').code",
+            "name": "code_orphanet"
+          }
+        ]
+      }
+    ]
+  }
+}
