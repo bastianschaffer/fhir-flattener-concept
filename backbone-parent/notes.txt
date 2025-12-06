@@ -1,0 +1,44 @@
+scenario:
+- two backbone elements with multiple different nested children
+- elementId to be flattened: Condition.stage 
+
+resulting table:
+Condition/cond-1,summary-system-A,summary-code-1,type-system-B,type-code-2-1
+Condition/cond-1,summary-system-A,summary-code-1,type-system-C,type-code-2-2
+Condition/cond-1,summary-system-A,summary-code-1,type-system-F,type-code-4-1
+Condition/cond-1,summary-system-D,summary-code-3-1,type-system-B,type-code-2-1
+Condition/cond-1,summary-system-D,summary-code-3-1,type-system-C,type-code-2-2
+Condition/cond-1,summary-system-D,summary-code-3-1,type-system-F,type-code-4-1
+Condition/cond-1,summary-system-E,summary-code-3-2,type-system-B,type-code-2-1
+Condition/cond-1,summary-system-E,summary-code-3-2,type-system-C,type-code-2-2
+Condition/cond-1,summary-system-E,summary-code-3-2,type-system-F,type-code-4-1
+
+simplified:
+resource:
+{
+stage: [
+   {
+    summary: [A],
+    type: [B,C]
+   },
+   {
+    summary: [D,E],
+    type: [F]
+   } 
+]
+}
+table:
+1,A,B
+1,A,C
+1,A,F
+1,D,B
+1,D,C
+1,D,F
+1,E,B
+1,E,C
+1,E,F
+
+-> 9 rows for a single (rather simple) resource
+
+TODO:
+- specify rules to generate that lookup from profiles
