@@ -1,0 +1,19 @@
+{
+  "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose",
+  "elements": [
+    {
+      "elementId": "Specimen.container.type.code.coding",
+      "column": [
+        {
+          "path": "type.coding.where(system = 'http://snomed.info/sct').code",
+          "name": "code_sct"
+        },
+        {
+          "path": "type.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/alpha-id').code",
+          "name": "code_alpha"
+        }
+      ],
+      "forEach": "container"
+    }
+  ]
+}
