@@ -9,6 +9,8 @@ docker run ghcr.io/medizininformatik-initiative/fhir-flattener:0.1.0-alpha.2
 ./request-flattening.sh <path/to/viewdef.json> <path/to/resource.json>
 ```
 
+
+
 * Example: `./request-flattening.sh condition-slice/viewDefinition-1.json condition-slice/condition.json`
 
 ### Tests
@@ -85,3 +87,25 @@ id, A, B, C
 1, A1, B_c2, B_s1, CX, -
 2, A2, B_c2, B_s1, -, -
 3, A2, -, - , CX, CY
+
+
+Example: 
+
+Slices defined + 2 slices with same codesystem
+```bash
+bash ./request-flattening.sh condition-slice/viewDefinition-1.json condition-slice/condition.json
+```
+```bash
+bash ./request-flattening.sh condition-slice/viewDefinition-2.json condition-slice/condition.json
+```
+Simple children of backbone -> columns
+```bash
+bash ./request-flattening.sh backbone-child/viewDefinition.json backbone-child/condition.json
+```
+Children in columns, all possible combinations down
+```bash
+bash ./request-flattening.sh backbone-parent/viewDefinition.json backbone-parent/condition.json
+```
+```bash
+bash ./request-flattening.sh cardinality-many/viewDefinition.json cardinality-many/specimen.json
+```
