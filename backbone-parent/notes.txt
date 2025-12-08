@@ -40,5 +40,22 @@ table:
 
 -> 9 rows for a single (rather simple) resource
 
+Considerations on why it can't be done better:
+- cardinalities of "*" mean that the amount of entries at that list is not known without knowing the resource (i.e. at viewDefinition generation time)
+- so in the viewDefinition it must be defined at "generation time" to handle such cases later at "flattening time 
+- this is done with "forEach" (creates one row for each found element)
+- "forEach" can only be done at one element at a time
+- so one could make a "forEach" at "Condition.stage" to generate a row for each stage
+- but if "stage.summary.coding" also has cardinality "*", there would have to be another nested "forEach" that kind of handles only the elements of the parent "stage"
+- but nested "forEach" is not possible in a ViewDefinition
+- insead, the top level "forEach" must act on "Condition.stage.summary.coding" instead of "Condition.stage"
+- it is not possible to do it differently because it MUST be handled to encounter multilpe codings at "Condition.stage.summary.coding"
+- with this we arrive at the ViewDefinition that can be seen here in backbone-parent/viewDefinition.json
+
+- maybe the "repeat" field of a ViewDefinition might help? 
+- i tried to test how the "repeat" field works but the flattener seemed no not support the "repeat" field so i couldn't test this further
+
+
+
 TODO:
 - specify rules to generate that lookup from profiles
