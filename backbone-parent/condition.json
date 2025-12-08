@@ -16,7 +16,8 @@
                         "system": "summary-system-A",
                         "display": "some display"
                     }
-                ]
+                ],
+                "assesment" : "testref/asdf1234f"
             },
             "type": {
                 "coding": [

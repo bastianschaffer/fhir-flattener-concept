@@ -55,7 +55,8 @@ Considerations on why it can't be done better:
 - maybe the "repeat" field of a ViewDefinition might help? 
 - i tried to test how the "repeat" field works but the flattener seemed no not support the "repeat" field so i couldn't test this further
 
-
+==> Solution: the "select" backbone element field does in fact allow for further nested "select" fields with which it might works
+==> BUT: pathling seems to not execute nested selects correctly
 
 TODO:
 - specify rules to generate that lookup from profiles

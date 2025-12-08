@@ -1,0 +1,29 @@
+{
+  "resourceType": "https://sql-on-fhir.org/ig/StructureDefinition/ViewDefinition",
+  "name": "condition-test",
+  "status": "draft",
+  "resource": "Condition",
+  "select": [
+    {
+      "column": [
+        {
+          "name": "id",
+          "path": "getResourceKey()"
+        }
+      ]
+    },
+    {
+      "repeat": ["stage", "summary"],
+      "column": [
+        {
+          "name": "summarySystem",
+          "path": "summary.coding.first().system"
+        },
+        {
+          "name": "summaryCode",
+          "path": "summary.coding.first().code"
+        }
+      ]
+    }
+  ]
+}

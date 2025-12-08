@@ -1,0 +1,40 @@
+{
+  "resourceType": "https://sql-on-fhir.org/ig/StructureDefinition/ViewDefinition",
+  "name": "condition-test",
+  "status": "draft",
+  "resource": "Condition",
+  "select": [
+    {
+      "column": [
+        {
+          "name": "id",
+          "path": "getResourceKey()"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "Condition.code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').code",
+          "name": "codeIcd10"
+        },
+        {
+          "path": "Condition.code.coding.where(system='http://fhir.de/CodeSystem/bfarm/alpha-id').code",
+          "name": "codeAlphaId"
+        },
+        {
+          "path": "Condition.code.coding.where(system='http://sct.info').code",
+          "name": "codesnomedCt"
+        },
+        {
+          "path": "Condition.code.coding.where(system='http://www.orpha.net' and code='11475-1').code",
+          "name": "codeoprhanet"
+        },
+        {
+          "path": "Condition.code.coding.where(system='http://www.orpha.net' and code!='11475-1').code",
+          "name": "codeoprhanet2"
+        }
+      ]
+    }
+  ]
+}
