@@ -1,0 +1,52 @@
+{
+    "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose",
+    "elements": [
+        {
+            "elementId": "Condition.stage",
+            "viewSnippets": [
+                {
+                    "ref": "Condition.stage.summary"
+                },
+                {
+                    "ref": "Condition.stage.type"
+                }
+            ]
+        },
+        {
+            "elementId": "Condition.stage.summary",
+            "viewSnippets": [
+                {
+                    "forEach": "stage.summary.coding",
+                    "column": [
+                        {
+                            "name": "summarySystem",
+                            "path": "system"
+                        },
+                        {
+                            "name": "summaryCode",
+                            "path": "code"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "elementId": "Condition.stage.type",
+            "viewSnippets": [
+                {
+                    "forEach": "stage.type.coding",
+                    "column": [
+                        {
+                            "name": "typeSystem",
+                            "path": "system"
+                        },
+                        {
+                            "name": "typeCode",
+                            "path": "code"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

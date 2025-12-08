@@ -1,0 +1,3 @@
+scenario:
+- two backbone elements with multiple different nested children
+- elementId to be flattened: Condition.stage 

@@ -1,0 +1,2 @@
+- view definitions for slices can only be generated if all slices are known and can be looked up
+- note that the server crashes with viewDefinition-2 when there are multile elements of the same code
