@@ -1,0 +1,74 @@
+{
+  "name": "resources",
+  "resource": {
+    "resourceType": "Specimen",
+    "id": "pat1",
+    "container": [
+      {
+        "type": {
+          "coding": [
+            {
+              "code": "434746001",
+              "system": "http://snomed.info/sct",
+              "version": "http://snomed.info/sct/900000000000207008/version/20230731",
+              "display": "Specimen vial (physical object)"
+            }
+          ]
+        },
+        "additiveReference": {
+          "reference": "Substance/mii-exa-test-data-patient-1-patho-neutral-buffered-formalin"
+        }
+      },
+      {
+        "type": {
+          "coding": [
+            {
+              "code": "434746002",
+              "system": "http://snomed.info/sct",
+              "version": "http://snomed.info/sct/900000000000207008/version/20230731",
+              "display": "Specimen vial (physical object)"
+            },
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
+              "code": "I29578",
+              "version": "2023",
+              "display": "Masern mit Otitis"
+            }
+          ]
+        },
+        "additiveReference": {
+          "reference": "Substance/mii-exa-test-data-patient-1-patho-neutral-buffered-formalin"
+        }
+      },
+      {
+        "type": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/bfarm/alpha-id",
+              "code": "I29578",
+              "version": "2023",
+              "display": "Masern mit Otitis"
+            }
+          ]
+        },
+        "additiveReference": {
+          "reference": "Substance/mii-exa-test-data-patient-1-patho-neutral-buffered-formalin"
+        }
+      }
+    ],
+    "type": {
+      "coding": [
+        {
+          "code": "309134005",
+          "system": "http://snomed.info/sct",
+          "version": "http://snomed.info/sct/900000000000207008/version/20230731",
+          "display": "Prostate tru-cut biopsy sample"
+        }
+      ]
+    },
+    "subject": {
+      "reference": "Patient/mii-exa-test-data-patient-1"
+    },
+    "recordedDate": "2024-02-21"
+  }
+}

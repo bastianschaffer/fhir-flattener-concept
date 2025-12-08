@@ -1,5 +1,19 @@
 ### Tests
 
+
+
+
+## Backbone Cardinality and Cardinality in general
+
+1. Backbones having multiple instances meaning a cardinality of 0..* like for example ``Specimen.container``will each get a separate row
+   - this is achieved by adding ```"foreach":"container"```
+2. 
+
+
+
+
+
+
 Was Tester sehen will:
 - datatype (z.B. resource mit 2 backbone elements)
 - output csv (z.B. tabelle mit 2 spalten, weil 2 backbone elements)
