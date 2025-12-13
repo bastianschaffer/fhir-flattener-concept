@@ -13,23 +13,54 @@
       ]
     },
     {
-      "forEach": "code.coding",
-      "column": [
+      "forEach": "code.coding.where(system = 'http://www.orpha.net')",
+      "select": [
         {
-          "name": "SCT",
-          "path": "where(system = 'http://snomed.info/sct').code"
-        },
+          "column": [
+            {
+              "name": "OrphaNet",
+              "path": "code"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "forEach": "code.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/alpha-id')",
+      "select": [
         {
-          "name": "AphaID",
-          "path": "where(system = 'http://fhir.de/CodeSystem/bfarm/alpha-id').code"
-        },
+          "column": [
+            {
+              "name": "alpha",
+              "path": "code"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "forEach": "code.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm')",
+      "select": [
         {
-          "name": "ICD10",
-          "path": "where(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm').code"
-        },
+          "column": [
+            {
+              "name": "icd",
+              "path": "code"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "forEach": "code.coding.where(system = 'http://snomed.info/sct')",
+      "select": [
         {
-          "name": "OphaNet",
-          "path": "where(system = 'http://www.orpha.net').code"
+          "column": [
+            {
+              "name": "sct",
+              "path": "code"
+            }
+          ]
         }
       ]
     }

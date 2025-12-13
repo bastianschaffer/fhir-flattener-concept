@@ -1,0 +1,24 @@
+{
+  "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Observation",
+  "elements": {
+    "Observation.valueQuantity": {
+      "view": {
+        "column": [
+          {
+            "name": "obs_valueQuantity_value",
+            "path": "valueQuantity.value"
+          },
+          {
+            "name": "obs_valueQuantity_code",
+            "path": "valueQuantity.code"
+          },
+          {
+            "name": "obs_valueQuantity_system",
+            "path": "valueQuantity.system"
+          }
+        ]
+      },
+      "ref": []
+    }
+  }
+}

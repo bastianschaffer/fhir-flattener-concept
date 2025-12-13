@@ -1,0 +1,28 @@
+{
+  "name": "spec",
+  "resource": "Specimen",
+  "resourceType": "ViewDefinition",
+  "select": [
+    {
+      "column": [
+        {
+          "name": "id",
+          "path": "getResourceKey()"
+        }
+      ]
+    },
+    {
+      "forEach": "container",
+      "column": [
+        {
+          "path": "type.coding.where(system = 'http://snomed.info/sct').code",
+          "name": "code_sct"
+        },
+        {
+          "path": "type.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/alpha-id').code",
+          "name": "code_alpha"
+        }
+      ]
+    }
+  ]
+}

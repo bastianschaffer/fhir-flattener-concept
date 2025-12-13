@@ -1,0 +1,9 @@
+{
+  "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Observation",
+  "elements": {
+    "Observation.valueRange": {
+      "view": {},
+      "ref": []
+    }
+  }
+}

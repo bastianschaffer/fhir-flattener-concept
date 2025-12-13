@@ -1,6 +1,7 @@
 - view definitions for slices can only be generated if all slices are known and can be looked up
-- note that the server crashes with viewDefinition-2 when there are multile codings of the same system
+- note that the server crashes with viewDefinition-2 when there are multiple codings of the same system
 
 
 - if there is a binding: *ignore* other systems
 - if there is a pattern and a binding: write the pattern as explicit column and another column for fields that are not equal to the pattern (see condition-slice/viewDefinition-3.json)
+- if nothing is defined then: create a column 'system' and 'code' and do forEach

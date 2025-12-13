@@ -14,7 +14,7 @@
             "version": "2020",
             "code": "summary-code-1",
             "system": "summary-system-A",
-            "display": "some display"
+            "display": "somedisplay"
           }
         ]
       },
@@ -24,13 +24,13 @@
             "version": "2020",
             "code": "type-code-2-1",
             "system": "type-system-B",
-            "display": "some display"
+            "display": "somedisplay"
           },
           {
             "version": "2020",
             "code": "type-code-2-2",
             "system": "type-system-C",
-            "display": "some display"
+            "display": "somedisplay"
           }
         ]
       }
@@ -42,13 +42,13 @@
             "version": "2020",
             "code": "summary-code-3-1",
             "system": "summary-system-D",
-            "display": "some display"
+            "display": "somedisplay"
           },
           {
             "version": "2020",
             "code": "summary-code-3-2",
             "system": "summary-system-E",
-            "display": "some display"
+            "display": "somedisplay"
           }
         ]
       },
@@ -58,13 +58,10 @@
             "version": "2020",
             "code": "type-code-4-1",
             "system": "type-system-F",
-            "display": "some display"
+            "display": "somedisplay"
           }
         ]
       }
     }
-  ],
-  "subject": {
-    "reference": "Patient/mii-exa-test-data-patient-1"
-  }
+  ]
 }

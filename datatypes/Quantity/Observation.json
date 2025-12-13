@@ -1,0 +1,16 @@
+{
+  "resourceType": "Observation",
+  "id": "obs-atemfrequenz-1",
+  "meta": {
+    "profile": [
+      "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/atemfrequenz"
+    ]
+  },
+  "valueQuantity": {
+    "system": "http://unitsofmeasure.org",
+    "code": "/min",
+    "value": 15,
+    "unit": "per minute"
+  },
+  "status": "final"
+}

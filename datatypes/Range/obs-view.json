@@ -1,0 +1,51 @@
+{
+  "name": "obs-value",
+  "resource": "Observation",
+  "resourceType": "ViewDefinition",
+  "select": [
+    {
+      "column": [
+        {
+          "name": "id",
+          "path": "id"
+        }
+      ]
+    },
+    {
+      "select": [
+        {
+          "column": [
+            {
+              "name": "obs_valueRange_low_value",
+              "path": "valueRange.low.value"
+            },
+            {
+              "name": "obs_valueRange_low_code",
+              "path": "valueRange.low.code"
+            },
+            {
+              "name": "obs_valueRange_low_system",
+              "path": "valueRange.low.system"
+            }
+          ]
+        },
+        {
+          "column": [
+            {
+              "name": "obs_valueRange_high_value",
+              "path": "valueRange.high.value"
+            },
+            {
+              "name": "obs_valueRange_high_code",
+              "path": "valueRange.high.code"
+            },
+            {
+              "name": "obs_valueRange_high_system",
+              "path": "valueRange.high.system"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

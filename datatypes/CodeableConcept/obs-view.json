@@ -1,0 +1,35 @@
+{
+  "name": "obs-value",
+  "resource": "Observation",
+  "resourceType": "ViewDefinition",
+  "select": [
+    {
+      "column": [
+        {
+          "name": "id",
+          "path": "id"
+        }
+      ]
+    },
+    {
+      "select": [
+        {
+          "column": [
+            {
+              "name": "obs_valueRange_low_value",
+              "path": "valueRange.low.value"
+            },
+            {
+              "name": "obs_valueRange_low_code",
+              "path": "valueRange.low.code"
+            },
+            {
+              "name": "obs_valueRange_low_system",
+              "path": "valueRange.low.system"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

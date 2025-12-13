@@ -13,7 +13,7 @@
       ]
     },
     {
-      "forEach": "stage.summary.coding",
+      "forEachOrNull": "stage.summary.coding",
       "column": [
         {
           "name": "summarySystem",

@@ -1,0 +1,24 @@
+{
+  "resourceType": "Observation",
+  "id": "obs-atemfrequenz-1",
+  "meta": {
+    "profile": [
+      "https://www.medizininformatik-initiative.de/fhir/ext/modul-icu/StructureDefinition/atemfrequenz"
+    ]
+  },
+  "valueRange": {
+    "low": {
+      "value": 15,
+      "code": "{Exon}",
+      "system": "http://unitsofmeasure.org",
+      "unit": "Exon"
+    },
+    "high": {
+      "value": 15,
+      "code": "{Exon}",
+      "system": "http://unitsofmeasure.org",
+      "unit": "Exon"
+    }
+  },
+  "status": "final"
+}

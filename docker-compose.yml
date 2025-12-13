@@ -1,7 +1,6 @@
 services:
   app:
-    image: ghcr.io/medizininformatik-initiative/fhir-flattener:0.1.0-alpha.2
+    image: ghcr.io/medizininformatik-initiative/fhir-flattener:0.1.0-alpha.4
     working_dir: /app
     ports:
       - "8000:8000"
-

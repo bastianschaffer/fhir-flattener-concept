@@ -1,0 +1,37 @@
+{
+  "name": "condition_test",
+  "select": [
+    {
+      "column": [
+        {
+          "name": "nnn",
+          "path": "getResourceKey()"
+        }
+      ]
+    },
+    {
+      "repeat": ["stage"],
+      "column": [
+        {
+          "name": "stage_summary_code",
+          "path": "summary.coding.code"
+        },
+        {
+          "name": "stage_summary_system",
+          "path": "summary.coding.system"
+        },
+        {
+          "name": "stage_type_code",
+          "path": "type.coding.code"
+        },
+        {
+          "name": "stage_type_system",
+          "path": "type.coding.system"
+        }
+      ]
+    }
+  ],
+  "status": "draft",
+  "resource": "Condition",
+  "resourceType": "ViewDefinition"
+}
