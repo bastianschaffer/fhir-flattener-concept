@@ -13,7 +13,7 @@
       ]
     },
     {
-      "forEach": "code.coding.where(system = 'http://www.orpha.net')",
+      "forEachOrNull": "code.coding.where(system = 'http://www.orpha.net')",
       "select": [
         {
           "column": [
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "forEach": "code.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/alpha-id')",
+      "forEachOrNull": "code.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/alpha-id')",
       "select": [
         {
           "column": [
@@ -39,7 +39,7 @@
       ]
     },
     {
-      "forEach": "code.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm')",
+      "forEachOrNull": "code.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm')",
       "select": [
         {
           "column": [
@@ -52,7 +52,7 @@
       ]
     },
     {
-      "forEach": "code.coding.where(system = 'http://snomed.info/sct')",
+      "forEachOrNull": "code.coding.where(system = 'http://snomed.info/sct')",
       "select": [
         {
           "column": [
