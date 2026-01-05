@@ -1,0 +1,5 @@
+// TODO: leo show all cases. Use a codeableConcept
+1. nothing defined
+2. binding
+3. Pattern
+4. Fixed

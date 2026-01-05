@@ -1,7 +1,7 @@
 # Procedure
 ## Start FHIR Server
 ```sh
-docker run ghcr.io/medizininformatik-initiative/fhir-flattener:0.1.0-alpha.2 
+docker run ghcr.io/medizininformatik-initiative/fhir-flattener:0.1.0-alpha.4
 ```
 
 ## Request Flattening
@@ -10,67 +10,48 @@ docker run ghcr.io/medizininformatik-initiative/fhir-flattener:0.1.0-alpha.2
 ```
 
 * Example: `./request-flattening.sh condition-slice/viewDefinition-3.json condition-slice/condition-duplicateSystem.json`
+* More Examples are further down
 
-### Tests
-
-Was Tester sehen will:
-- datatype (z.B. resource mit 2 backbone elements)
-- output csv (z.B. tabelle mit 2 spalten, weil 2 backbone elements)
-
-Einzelner Test:
-- pro fhir type
-- input:
-    - resource.json
-    - viewdev.json
-- durchführung:
-    - resource und viewdev werden in parameter gemerged
-    - parameter wird in curl requeset gemerted
-    - curl wird abgesendet
-- outpt: 
-    - eine enizelne csv
-
-- Pro Bundle (1 Zeile in ndjson) eine einzige tabelle
-- in viewdev: 1 param pro res und 1 param pro res-viewDef
-    -> z.B. 2 observation resources aber nur eine viewDef für resourceType observation
-- eine resource auf mehrere Zeilen aufzuteilen ist kein problem solange res.id immer dabei ist
-
-### Rules - Structures:
+# Rules - Structures:
 Dse/torch does allow the selection of complex data types. This results in repeated json structure in the concept file as the complete subtree needs to be included to support selection of parent element.
 The values are stored in the leafs-elements of the tree structure of the profile.
-#### Slices:
+### Slices:
 - Slices are always defined ... ???
 - each defined slice gets a column
 - (see Coding)
 
-#### Backbone:
+### Backbone:
 - For each child of a backbone:
-  - if a primitive: create a column
+  - if a primitive (a leaf with a value): create a column
   - if still complex: create entry in ```ref```
 - Cardinality MANY: create a row for each instance
 
-#### Cardinality
+### Cardinality
 - The Profile defines the cardinality for each element with min/max.
   - if el.max == * : for each instance create a row
   - if el.max == 1 : NO NEED FOR FOREACH???
 - Keep in mind that elements can have children, each with cardinality MANY. This should be handled by implementation
 
-#### Extensions 
+### Extensions 
 - extensions should be resolved when generating the flatteningInstructions
-- extensions should be flattened according to the type
+- extensions should be flattened according to the type of the resolved element
 
-#### Polymorphic elements
+### Polymorphic elements
 - Polymorphic elements should be rendered as the specified type defines
-- If multiple types are allowed, render all defined
+- If multiple types are allowed, render all defined. In most cases only one of the defined types is allowed
 - If no type is defined, ERROR, this cant be????
   - Beispiel: Observation.value[x]:
     - StructureDefinition: valueQuantity, -CodeableConcept,-Range,- Ratio
       - 4 Spalte
 
 --- 
-### Rules - 'Datatypes'
+# Rules - 'Datatypes'
 
-#### Codeable concept: => coding
-#### Coding: code + system
+### Codeable concept: => coding
+````shell
+bash ./request-flattening.sh datatypes/CodeableConcept/obs-view.json datatypes/CodeableConcept/Observation_simple.json
+````
+### Coding: code + system
 
 | el_id_system_1 | el_id_system_2 | ... |
 |----------------|----------------|-----|
@@ -83,16 +64,16 @@ The values are stored in the leafs-elements of the tree structure of the profile
   - Binding
   - fixed
   - also note that the cardinality of the coding does matter
-- If no slice is defined create 2 coulmns ```el-code,el-code```
+- If no slice is defined create 2 columns ```el-code,el-code```
 
-#### Reference:
+### Reference:
 
 | el_id_reference |
 |-----------------|
 | ref_string      |
 simple string => create column
 
-#### Quantity:  code(unit) + value + system
+### Quantity:  code(unit) + value + system | SimpleQuantity
 
 | el_id_quantity_code  | el_id_quantity_value | el_id_quantity_system       |
 |----------------------|----------------------|-----------------------------|
@@ -102,8 +83,8 @@ simple string => create column
 bash ./request-flattening.sh datatypes/Quantity/obs-view.json datatypes/Quantity/Observation.json
 ````
 
-#### Range: low + high
-low and high are quantities => ref 
+### Range: low + high
+low and high are quantities. create a reference 
 
 | el_id_range_low_code | el_id_range_low_value | el_id_range_low_system     | el_id_range_high_code | el_id_range_high_value | el_id_range_high_system    |
 |----------------------|-----------------------|----------------------------|-----------------------|------------------------|----------------------------|
@@ -112,47 +93,18 @@ low and high are quantities => ref
 ````shell
 bash ./request-flattening.sh datatypes/Range/obs-view.json datatypes/Range/Observation.json
 ````
+### Ratio: numerator + denominator
+numerator + denominator are both quantities. create references to numerator and denominator
+example basically the same as Range
+
+### Period: start + end
+start and end are of type: dateTime
+
 
 ---
 
-- alles andere
-    - wie backbone betrachten -> kinder sideways, instances down
-    - Beispiel: 1 resource hat in 1 feld 2 ranges: Spalten: min, max, Zeilen: jeweils ausgefüllt nach Ausprägung der beiden range elements
 
-- Umsetzung in view definition:
-    - kardnialität 1..* --> instances down --> "forEach"
-    - kardnialität 0..1 --> kein "forEach"
-    - spalten je nach children und slices
-
-- A is signle string
-- B is backbone of B_c, B_s
-- C is slice of C:X, C:Y
-res 1: extension: A1, [{B_c1, B_s1}, {B_c2, B_s1}], C:X
-res 2: extension: A2
-
-==> 
-id, A, B_c, B_s, C:X, CY
-1, A1, B_c1, B_s1 -, -
-1, A1, B_c2, B_s1 -, -
-2, A2, -, -, -
-==> we must know the possbile extensions for the resourceType to be able to define a column for each
-
-extension B of type backbone:
-res 1: extension: A1, [{B_c1, B_s1}, {B_c2, B_s1}], CX, -
-res 2: extension: A2, [{B_c2, B_s1}], -, -
-res 3: extension: A2, -, CX, CY
-==> 
-id, A, B, C
-1, A1, B_c1, B_s1, CX, -
-1, A1, B_c2, B_s1, CX, -
-2, A2, B_c2, B_s1, -, -
-3, A2, -, - , CX, CY
-
-
-
-
-
-Example: 
+More Example: 
 
 ### Slices
 

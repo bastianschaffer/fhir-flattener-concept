@@ -1,0 +1,33 @@
+{
+  "name": "obs-value",
+  "resource": "Observation",
+  "resourceType": "ViewDefinition",
+  "select": [
+    {
+      "column": [
+        {
+          "name": "id",
+          "path": "id"
+        }
+      ]
+    },
+    {
+      "forEachOrNull": "valueCodeableConcept.coding.where(system='http://snomed.info/sct')",
+      "column": [
+        {
+          "name": "value_sct",
+          "path": "code"
+        }
+      ]
+    },
+    {
+      "forEachOrNull": "valueCodeableConcept.coding.where(system='loinc.org')",
+      "column": [
+        {
+          "name": "value_loinc",
+          "path": "code"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "resourceType": "Observation",
+  "id": "kulturnachweis-1",
+  "valueCodeableConcept": {
+    "coding": [
+      {
+        "code": "115329001",
+        "system": "http://snomed.info/sct",
+        "display": "Methicillin resistant Staphylococcus aureus"
+      },
+      {
+        "code": "111111111",
+        "system": "http://snomed.info/sct",
+        "display": "Methicillin resistant Staphylococcus aureus"
+      },
+      {
+        "code": "2222222222",
+        "system": "loinc.org",
+        "display": "late night"
+      }
+    ]
+  },
+  "status": "final"
+}
