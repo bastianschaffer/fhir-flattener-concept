@@ -94,7 +94,6 @@ Example:
     - StructureDefinition: valueQuantity, -CodeableConcept,-Range,- Ratio
       - 4 Spalte
 
---- 
 # Rules - 'Datatypes'
 
 ### Codeable concept: => coding
