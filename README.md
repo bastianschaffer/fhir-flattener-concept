@@ -22,9 +22,12 @@ At root level ``url`` and ``elements`` should be present, similar to the viewDef
 - ``elements``: a dictionary holding flatteningInstructions for each element of the Profile
   - Each element contains either ``children`` or ``viewDefintion``:
     - ``viewDefinition``: viewDefinition snippet to use for the element with this id
-      - ``name`` of each element in the viewDefinition snippet is created by replacing the `.` with a `_` and a `:` with `#`, as `.` and `:` are not allowed by pathling
     - ``children``: array of child element ids. This is used to also support selection of parent nodes in dse selection. 
       Using this approach reduces complexity and file size by avoiding including the parent subtree each time, as the information is stored in the leafs of the tree anyway.
+
+Colum Names: 
+- ``name`` of each element in the viewDefinition snippet is created by replacing the `.` with a `_` and a `:` with `#` and prefixed with the profile url / name to make it unique
+
 Example:
 ```json
 {
@@ -57,11 +60,10 @@ Example:
 ```
 
 # Rules - Structures:
-Dse/torch does allow the selection of complex data types. This results in repeated json structure in the concept file as the complete subtree needs to be included to support selection of parent element.
-
 ### Slices:
 - Slices are always defined ... ???
 - Each defined slice gets a column
+  - Slices can be defined by ``fixed`` `pattern` and `bindings`. See ``coding`` for further detail.
 - Instances of slices which are not mentioned in the Profile should be ignored
   - Special case: If code and system are defined by a pattern, meaning the expectation is exactly this code-system combination
 - If no slice is defined in the profile => create columns ``el-code, el-system``
@@ -80,8 +82,9 @@ Dse/torch does allow the selection of complex data types. This results in repeat
 - Keep in mind that elements can have children, each with cardinality MANY. This should be handled by implementation
 
 ### Extensions 
-- extensions should be resolved when generating the flatteningInstructions
-- extensions should be flattened according to the type of the resolved element
+- Extensions contain a `url` and ``value``. The ``url`` should be used to create the column name. 
+- Extensions should be flattened according to the type of the ``value`` element
+- Extensions containing extensions should be flattened to the side. Create a column for each level.
 
 ### Polymorphic elements
 - Polymorphic elements should be rendered as the specified type defines
@@ -106,11 +109,12 @@ bash ./request-flattening.sh datatypes/CodeableConcept/obs-view.json datatypes/C
 
 - For each defined system create a column.
   - If no codesystem is defined than 2 columns ``el-code, el-system`` should be created
-- If a pattern is defined
 - Where to look for code system restrictions:
   - Binding
   - fixed
-  - also note that the cardinality of the coding does matter
+  - pattern
+  - also note that the cardinality of the coding does matter ??
+- In the rare case that an instance contains codings with the same codesystem, see the example in ``/condition-slice``
 - If no slice is defined create 2 columns ```el-code,el-code```
 
 ### Reference:
