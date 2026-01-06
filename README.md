@@ -12,12 +12,59 @@ docker run ghcr.io/medizininformatik-initiative/fhir-flattener:0.1.0-alpha.4
 * Example: `./request-flattening.sh condition-slice/viewDefinition-3.json condition-slice/condition-duplicateSystem.json`
 * More Examples are further down
 
+# Purpose
+The ``flatteningInstructions`` file represents a lookup table with instructions on how to flatten an element of a profile given the element id.
+    This file will be used by the fhir-flattener to create csv file 
+
+# The conceptFile format:
+At root level ``url`` and ``elements`` should be present, similar to the viewDefinition format
+- ``url``: url of the profile which this conceptFile corresponds to 
+- ``elements``: a dictionary holding flatteningInstructions for each element of the Profile
+  - Each element contains either ``children`` or ``viewDefintion``:
+    - ``viewDefinition``: viewDefinition snippet to use for the element with this id
+      - ``name`` of each element in the viewDefinition snippet is created by replacing the `.` with a `_` and a `:` with `#`, as `.` and `:` are not allowed by pathling
+    - ``children``: array of child element ids. This is used to also support selection of parent nodes in dse selection. 
+      Using this approach reduces complexity and file size by avoiding including the parent subtree each time, as the information is stored in the leafs of the tree anyway.
+Example:
+```json
+{
+    "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose",
+    "elements": {
+        "Condition.stage": {
+            "viewDefinition": [],
+            "children": ["Condition.stage.summary", "Condition.stage.type"]
+        },
+        "Condition.stage.summary": {
+            "viewDefinition": [
+                {
+                    "forEach": "stage.summary.coding",
+                    "column": [
+                        {
+                            "name": "summary_system",
+                            "path": "system"
+                        },
+                        {
+                            "name": "summary_code",
+                            "path": "code"
+                        }
+                    ]
+                }
+            ],
+          "children": []
+        }
+    }
+}
+```
+
 # Rules - Structures:
 Dse/torch does allow the selection of complex data types. This results in repeated json structure in the concept file as the complete subtree needs to be included to support selection of parent element.
-The values are stored in the leafs-elements of the tree structure of the profile.
+
 ### Slices:
 - Slices are always defined ... ???
-- each defined slice gets a column
+- Each defined slice gets a column
+- Instances of slices which are not mentioned in the Profile should be ignored
+  - Special case: If code and system are defined by a pattern, meaning the expectation is exactly this code-system combination
+- If no slice is defined in the profile => create columns ``el-code, el-system``
 - (see Coding)
 
 ### Backbone:
@@ -84,7 +131,7 @@ bash ./request-flattening.sh datatypes/Quantity/obs-view.json datatypes/Quantity
 ````
 
 ### Range: low + high
-low and high are quantities. create a reference 
+low and high are quantities. create a ```ref``` 
 
 | el_id_range_low_code | el_id_range_low_value | el_id_range_low_system     | el_id_range_high_code | el_id_range_high_value | el_id_range_high_system    |
 |----------------------|-----------------------|----------------------------|-----------------------|------------------------|----------------------------|
@@ -94,7 +141,7 @@ low and high are quantities. create a reference
 bash ./request-flattening.sh datatypes/Range/obs-view.json datatypes/Range/Observation.json
 ````
 ### Ratio: numerator + denominator
-numerator + denominator are both quantities. create references to numerator and denominator
+numerator + denominator are both quantities. create ```refs``` to numerator and denominator
 example basically the same as Range
 
 ### Period: start + end
