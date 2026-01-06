@@ -151,8 +151,6 @@ example basically the same as Range
 start and end are of type: dateTime
 
 
----
-
 
 # More Example: 
 
@@ -170,7 +168,7 @@ Slice duplicate system, example: ``Observation.code`` in ``mikrobio kulturnachwe
 ```bash
 bash ./request-flattening.sh condition-slice/viewDefinition-1.json condition-slice/condition-duplicateSystem.json
 ```
----
+
 ### Backbone
 #### - backbone child + unknown slice-systems
 Simple children of backbone -> column TODO: multiple 
@@ -179,7 +177,6 @@ Simple children of backbone -> column TODO: multiple
 ```bash
 bash ./request-flattening.sh backbone-child/viewDefinition.json backbone-child/condition.json
 ```
----
 #### - Backbone element
 Children in columns, all possible combinations down
 - does cross Produkt: 3x3 = 9. Combinations even with not children  
