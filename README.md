@@ -114,7 +114,7 @@ bash ./request-flattening.sh datatypes/CodeableConcept/obs-view.json datatypes/C
   - pattern
   - also note that the cardinality of the coding does matter ??
 - In the rare case that an instance contains codings with the same codesystem, see the example in ``/condition-slice``
-- If no slice is defined create 2 columns ```el-code,el-code```
+- If no slice is defined create 2 columns ```el-code,el-code``` and fill in if any code+system exists in the instance data
 
 ### Reference:
 
@@ -125,9 +125,11 @@ simple string => create column
 
 ### Quantity:  code(unit) + value + system | SimpleQuantity
 
-| el_id_quantity_code  | el_id_quantity_value | el_id_quantity_system       |
-|----------------------|----------------------|-----------------------------|
-| "mm[Hg]"             | 20                   | http://unitsofmeasure.org   |
+| el_id_quantity_code  | el_id_quantity_value | el_id_quantity_system       | el_id_quantity_comparator |
+|----------------------|----------------------|-----------------------------|---------------------------|
+| "mm[Hg]"             | 20                   | http://unitsofmeasure.org   | <                         |
+
+> TODO: Debate if comparators are needed. They might be present, tough I could not find them in test-data.zip
 
 ````shell
 bash ./request-flattening.sh datatypes/Quantity/obs-view.json datatypes/Quantity/Observation.json
