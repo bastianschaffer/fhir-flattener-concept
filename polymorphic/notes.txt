@@ -1,0 +1,72 @@
+
+
+
+for each type a select
+
+
+
+
+
+
+
+
+,
+    {
+      "forEach": "value.ofType(Quantity)",
+      "column": [
+        {
+          "name": "valueQuantity_code",
+          "path": "value.ofType(Quantity).code"
+        },
+        {
+          "name": "valueCodeableConcept_code",
+          "path": "value.ofType(CodeableConcept).coding.where(system = 'http://snomed.info/sct').code"
+        },
+        {
+          "name": "valueRange_low_quantity",
+          "path": "value.ofType(Range).low.code"
+        },
+        {
+          "name": "valueRange_high_quantity",
+          "path": "value.ofType(Range).high.code"
+        },
+        {
+          "name": "valueRatio_numerator_quantity",
+          "path": "value.ofType(Ratio).numerator.code"
+        },
+        {
+          "name": "valueRatio_denominator_quantity",
+          "path": "value.ofType(Ratio).denominator.code"
+        }
+      ]
+    },
+    {
+      "forEach": "value.ofType(CodeableConcept)",
+      "column": [
+        {
+          "name": "valueQuantity_code",
+          "path": "value.ofType(Quantity).code"
+        },
+        {
+          "name": "valueCodeableConcept_code",
+          "path": "value.ofType(CodeableConcept).coding.where(system = 'http://snomed.info/sct').code"
+        },
+        {
+          "name": "valueRange_low_quantity",
+          "path": "value.ofType(Range).low.code"
+        },
+        {
+          "name": "valueRange_high_quantity",
+          "path": "value.ofType(Range).high.code"
+        },
+        {
+          "name": "valueRatio_numerator_quantity",
+          "path": "value.ofType(Ratio).numerator.code"
+        },
+        {
+          "name": "valueRatio_denominator_quantity",
+          "path": "value.ofType(Ratio).denominator.code"
+        }
+      ]
+    }
+

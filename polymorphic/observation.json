@@ -1,0 +1,55 @@
+{
+  "resourceType": "Observation",
+  "id": "obs-1",
+  "code": {
+    "coding": [
+      {
+        "code": "26464-8",
+        "system": "http://loinc.org",
+        "display": "Leukocytes [#/volume] in Blood"
+      }
+    ]
+  },
+  "valueCodeableConcept": {
+    "coding": [
+      {
+        "code": "703645005",
+        "system": "http://snomed.info/sct",
+        "version": "http://snomed.info/sct/900000000000207008/version/20230731",
+        "display": "Product containing B-Raf inhibitor (product)"
+      },
+      {
+        "code": "1111",
+        "system": "test",
+        "version": "http://snomed.info/sct/900000000000207008/version/20230731",
+        "display": "Product containing B-Raf inhibitor (product)"
+      }
+    ]
+  },
+  "valueRange": {
+    "low": {
+      "value": 15,
+      "code": "{Exon}",
+      "system": "http://unitsofmeasure.org",
+      "unit": "Exon"
+    },
+    "high": {
+      "value": 15,
+      "code": "{Exon}",
+      "system": "http://unitsofmeasure.org",
+      "unit": "Exon"
+    }
+  },
+  "valueRatio": {
+    "numerator": {
+      "value": 16,
+      "code": "ng",
+      "system": "http://unitsofmeasure.org"
+    },
+    "denominator": {
+      "value": 1,
+      "code": "mL",
+      "system": "http://unitsofmeasure.org"
+    }
+  }
+}

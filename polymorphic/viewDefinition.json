@@ -1,0 +1,28 @@
+{
+  "resourceType": "https://sql-on-fhir.org/ig/StructureDefinition/ViewDefinition",
+  "name": "obs-test",
+  "status": "draft",
+  "resource": "Observation",
+  "select": [
+    {
+      "column": [
+        {
+          "name": "id",
+          "path": "getResourceKey()"
+        }
+      ]
+    },
+    {
+      "forEach": "value.ofType(CodeableConcept).coding",
+      "column": [
+        {
+          "name": "system",
+          "path": "system"
+        },{
+          "name": "code",
+          "path": "code"
+        }
+      ]
+    }
+  ]
+}
