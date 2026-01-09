@@ -2,22 +2,20 @@
   "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose",
   "elements": {
     "Specimen.container.type.code.coding": {
-      "select": [
-        {
-          "column": [
-            {
-              "path": "type.coding.where(system = 'http://snomed.info/sct').code",
-              "name": "valueQuantity_code"
-            },
-            {
-              "path": "type.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/alpha-id').code",
-              "name": "valueQuantity_code"
-            }
-          ],
-          "forEach": "container"
-        }
-      ],
-      "refs"
+      "viewDefinition": {
+        "column": [
+          {
+            "path": "type.coding.where(system = 'http://snomed.info/sct').code",
+            "name": "valueQuantity_code"
+          },
+          {
+            "path": "type.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/alpha-id').code",
+            "name": "valueQuantity_code"
+          }
+        ],
+        "forEach": "container"
+      },
+      "children": []
     }
   }
 }
