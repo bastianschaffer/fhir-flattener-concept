@@ -1,0 +1,44 @@
+{
+  "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose",
+  "elements": {
+    "Condition.code": {
+      "ViewDefinition": {},
+      "children": [
+        "Condition.code.coding:sct",
+        "Condition.code.coding:icd10"
+      ]
+    },
+    "Condition.code.coding:sct": {
+      "viewDefinition": {
+        "forEachOrNull": "code.coding.where(system = 'http://snomed.info/sct')",
+        "select": [
+          {
+            "column": [
+              {
+                "name": "sct",
+                "path": "code"
+              }
+            ]
+          }
+        ]
+      },
+      "children": []
+    },
+    "Condition.code.coding:icd10": {
+      "viewDefinition": {
+        "forEachOrNull": "code.coding.where(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm')",
+        "select": [
+          {
+            "column": [
+              {
+                "name": "icd",
+                "path": "code"
+              }
+            ]
+          }
+        ]
+      },
+      "children": []
+    }
+  }
+}

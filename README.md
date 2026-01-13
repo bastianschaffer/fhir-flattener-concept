@@ -93,6 +93,8 @@ Example:
   - Beispiel: Observation.value[x]:
     - StructureDefinition: valueQuantity, -CodeableConcept,-Range,- Ratio
       - 4 Spalte
+> Folder with examples: [polymorphic](polymorphic)
+
 
 # Rules - 'Datatypes'
 
