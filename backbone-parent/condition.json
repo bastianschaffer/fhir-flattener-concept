@@ -59,6 +59,12 @@
             "code": "type-code-4-1",
             "system": "type-system-F",
             "display": "some display"
+          },
+          {
+            "version": "2020",
+            "code": "type-code-4-2",
+            "system": "type-system-G",
+            "display": "some display"
           }
         ]
       }

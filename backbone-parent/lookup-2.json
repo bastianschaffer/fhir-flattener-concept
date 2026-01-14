@@ -1,43 +1,54 @@
 {
-    "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose",
-    "elements": {
-        "Condition.stage": {
-            "viewSnippets": [],
-            "children": ["Condition.stage.summary", "Condition.stage.type"]
-        },
-        "Condition.stage.summary": {
-            "viewSnippets": [
-                {
-                    "forEach": "stage.summary.coding",
-                    "column": [
-                        {
-                            "name": "summarySystem",
-                            "path": "system"
-                        },
-                        {
-                            "name": "summaryCode",
-                            "path": "code"
-                        }
-                    ]
-                }
+  "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose",
+  "elements": {
+    "Condition.stage": {
+      "viewDefinition": {
+        "forEach": "stage",
+        "select": [
+        ]
+      },
+      "children": [
+        "Condition.stage.summary",
+        "Condition.stage.type"
+      ]
+    },
+    "Condition.stage.summary": {
+      "viewDefinition": {
+        "forEach": "summary.coding",
+        "select": [
+          {
+            "column": [
+              {
+                "name": "codesystem",
+                "path": "system"
+              },
+              {
+                "name": "summarycode",
+                "path": "code"
+              }
             ]
-        },
-        "Condition.stage.type": {
-            "viewSnippets": [
-                {
-                    "forEach": "stage.type.coding",
-                    "column": [
-                        {
-                            "name": "typeSystem",
-                            "path": "system"
-                        },
-                        {
-                            "name": "typeCode",
-                            "path": "code"
-                        }
-                    ]
-                }
+          }
+        ]
+      }
+    },
+    "Condition.stage.type": {
+      "viewDefinition": {
+        "forEach": "type.coding",
+        "select": [
+          {
+            "column": [
+              {
+                "name": "codesystem1",
+                "path": "system"
+              },
+              {
+                "name": "typecode",
+                "path": "code"
+              }
             ]
-        }
+          }
+        ]
+      }
     }
+  }
 }

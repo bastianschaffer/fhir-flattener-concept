@@ -69,11 +69,58 @@ Example:
 - If no slice is defined in the profile => create columns ``el-code, el-system``
 - (see Coding)
 
+> Folder with examples: [condition-slice](conditioclearn-slice)
+
+<details>
+<summary>Run examples directly</summary>
+
+The best approach is seen in [condition-slice/viewDefinition-1.json](condition-slice/viewDefinition-1.json)
+
+- Slices defined with different systems
+```bash
+bash ./request-flattening.sh condition-slice/viewDefinition-1.json condition-slice/condition-unique-systems.json
+```
+- Slices defined with one pattern + extensible binding: example: ``Observation.category.coding`` in ``mikrobio empfindlichkeit``
+```bash
+bash ./request-flattening.sh condition-slice/viewDefinition-3.json condition-slice/condition-duplicateSystem.json
+```
+- Slice duplicate system, example: ``Observation.code`` in ``mikrobio kulturnachweis`` ???
+```bash
+bash ./request-flattening.sh condition-slice/viewDefinition-1.json condition-slice/condition-duplicateSystem.json
+```
+</details>
+
 ### Backbone:
 - For each child of a backbone:
   - if a primitive (a leaf with a value): create a column
   - if still complex: create entry in ```ref```
 - Cardinality MANY: create a row for each instance
+
+> Folder with examples: [backbone-parent](backbone-parent)
+
+> TODO: To discuss if the defined format works for this type 
+
+<details>
+<summary>Run the examples</summary>
+
+Using nested selects, the best approach so far
+```bash
+bash ./request-flattening.sh backbone-parent/testSelectField-viewDefinition.json backbone-parent/condition.json
+```
+
+Wrong, because of mixing system and codes which do not belong together
+```bash
+bash ./request-flattening.sh backbone-parent/viewDefinition.json backbone-parent/condition.json
+```
+Pathling, which the fhir-flattener is build upon, does not support repeat
+```bash
+bash ./request-flattening.sh backbone-parent/testRepeatField-viewDefinition.json backbone-parent/condition.json
+```
+another repeat example
+```bash
+bash ./request-flattening.sh backbone-parent/viewDefinition2.json backbone-parent/condition.json
+```
+</details>
 
 ### Cardinality
 - The Profile defines the cardinality for each element with min/max.
@@ -94,7 +141,14 @@ Example:
     - StructureDefinition: valueQuantity, -CodeableConcept,-Range,- Ratio
       - 4 Spalte
 > Folder with examples: [polymorphic](polymorphic)
+ 
+<details>
+<summary>Run examples for polymorphic elements</summary>
 
+```bash
+bash ./request-flattening.sh polymorphic/viewDefinition.json polymorphic/observation.json
+```
+</details>
 
 # Rules - 'Datatypes'
 
@@ -102,6 +156,8 @@ Example:
 ````shell
 bash ./request-flattening.sh datatypes/CodeableConcept/obs-view.json datatypes/CodeableConcept/Observation_simple.json
 ````
+> Folder with examples: [datatypes/CodeableConcept](datatypes/CodeableConcept)
+
 ### Coding: code + system
 
 | el_id_system_1 | el_id_system_2 | ... |
@@ -118,6 +174,8 @@ bash ./request-flattening.sh datatypes/CodeableConcept/obs-view.json datatypes/C
 - In the rare case that an instance contains codings with the same codesystem, see the example in ``/condition-slice``
 - If no slice is defined create 2 columns ```el-code,el-code``` and fill in if any code+system exists in the instance data
 
+> Folder with examples: [datatypes/Coding](datatypes/Coding)
+
 ### Reference:
 
 | el_id_reference |
@@ -130,6 +188,7 @@ simple string => create column
 | el_id_quantity_code  | el_id_quantity_value | el_id_quantity_system       | el_id_quantity_comparator |
 |----------------------|----------------------|-----------------------------|---------------------------|
 | "mm[Hg]"             | 20                   | http://unitsofmeasure.org   | <                         |
+> Folder with examples: [datatypes/Quantity](datatypes/Quantity)
 
 > TODO: Debate if comparators are needed. They might be present, tough I could not find them in test-data.zip
 
@@ -143,6 +202,7 @@ low and high are quantities. create a ```ref```
 | el_id_range_low_code | el_id_range_low_value | el_id_range_low_system     | el_id_range_high_code | el_id_range_high_value | el_id_range_high_system    |
 |----------------------|-----------------------|----------------------------|-----------------------|------------------------|----------------------------|
 | {Exon}               | 15                    | http://unitsofmeasure.org  | {Exon}                | 15                     | http://unitsofmeasure.org  |
+> Folder with examples: [datatypes/Range](datatypes/Range)
 
 ````shell
 bash ./request-flattening.sh datatypes/Range/obs-view.json datatypes/Range/Observation.json
@@ -156,22 +216,7 @@ start and end are of type: dateTime
 
 
 
-# More Example: 
-
-### Slices
-
-Slices defined with different systems
-```bash
-bash ./request-flattening.sh condition-slice/viewDefinition-2.json condition-slice/condition-unique-systems.json
-```
-Slices defined with one pattern + extensible binding: example: ``Observation.category.coding`` in ``mikrobio empfindlichkeit``
-```bash
-bash ./request-flattening.sh condition-slice/viewDefinition-3.json condition-slice/condition-duplicateSystem.json
-```
-Slice duplicate system, example: ``Observation.code`` in ``mikrobio kulturnachweis`` ???
-```bash
-bash ./request-flattening.sh condition-slice/viewDefinition-1.json condition-slice/condition-duplicateSystem.json
-```
+# More Example:
 
 ### Backbone
 #### - backbone child + unknown slice-systems
@@ -183,28 +228,14 @@ bash ./request-flattening.sh backbone-child/viewDefinition.json backbone-child/c
 ```
 #### - Backbone element
 Children in columns, all possible combinations down
-- does cross Produkt: 3x3 = 9. Combinations even with not children  
-```bash
-bash ./request-flattening.sh backbone-parent/viewDefinition.json backbone-parent/condition.json
-```
-```bash
-bash ./request-flattening.sh backbone-parent/testRepeatField-viewDefinition.json backbone-parent/condition.json
-```
-```bash
-bash ./request-flattening.sh backbone-parent/testSelectField-viewDefinition.json backbone-parent/condition.json
-```
-```bash
-bash ./request-flattening.sh backbone-parent/viewDefinition2.json backbone-parent/condition.json
-```
+- does cross Produkt: 3x3 = 9. Combinations even with not children
 broken
 ```bash
 bash ./request-flattening.sh backbone-cardinality-many/viewDefinition.json backbone-cardinality-many/specimen.json
 ```
 
 ### Polymorphic elements:
-```bash
-bash ./request-flattening.sh polymorphic/viewDefinition.json polymorphic/observation.json
-```
+
 
 
 
