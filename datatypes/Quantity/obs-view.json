@@ -24,6 +24,10 @@
         {
           "name": "obs_valueQuantity_system",
           "path": "valueQuantity.system"
+        },
+        {
+          "name": "obs_valueQuantity_comp",
+          "path": "valueQuantity.comparator"
         }
       ]
     }

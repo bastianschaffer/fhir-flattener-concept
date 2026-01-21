@@ -24,40 +24,132 @@ At root level ``url`` and ``elements`` should be present, similar to the viewDef
     - ``viewDefinition``: viewDefinition snippet to use for the element with this id
     - ``children``: array of child element ids. This is used to also support selection of parent nodes in dse selection. 
       Using this approach reduces complexity and file size by avoiding including the parent subtree each time, as the information is stored in the leafs of the tree anyway.
+    - ``parent``: each element should have a reference to the parent element
 
 Colum Names: 
-- ``name`` of each element in the viewDefinition snippet is created by replacing the `.` with a `_` and a `:` with `#` and prefixed with the profile url / name to make it unique
+- ``name`` of each element in the viewDefinition snippet is created by replacing the `.` with a `_` and a `:` with `#`
 
 Example:
 ```json
 {
-    "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose",
-    "elements": {
-        "Condition.stage": {
-            "viewDefinition": [],
-            "children": ["Condition.stage.summary", "Condition.stage.type"]
-        },
-        "Condition.stage.summary": {
-            "viewDefinition": [
-                {
-                    "forEach": "stage.summary.coding",
-                    "column": [
-                        {
-                            "name": "summary_system",
-                            "path": "system"
-                        },
-                        {
-                            "name": "summary_code",
-                            "path": "code"
-                        }
-                    ]
-                }
-            ],
-          "children": []
-        }
+  "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose",
+  "elements": {
+    "Condition.stage": {
+      "viewDefinition": {
+        "forEach": "stage",
+        "select": [
+        ]
+      },
+      "children": [
+        "Condition.stage.summary",
+        "Condition.stage.type"
+      ]
+    },
+    "Condition.stage.summary": {
+      "parent": "Condition.stage",
+      "viewDefinition": {
+        "forEach": "summary.coding",
+        "select": [
+          {
+            "column": [
+              {
+                "name": "codesystem",
+                "path": "system"
+              },
+              {
+                "name": "summarycode",
+                "path": "code"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Condition.stage.type": {
+      "parent": "Condition.stage",
+      "viewDefinition": {
+        "forEach": "type.coding",
+        "select": [
+          {
+            "column": [
+              {
+                "name": "codesystem1",
+                "path": "system"
+              },
+              {
+                "name": "typecode",
+                "path": "code"
+              }
+            ]
+          }
+        ]
+      }
     }
+  }
 }
 ```
+````json
+{
+  "url": "https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose",
+  "elements": {
+    "Condition.code": {
+      "viewDefinition": {
+        "forEach": "code",
+        "select": []
+      },
+      "children": [
+        "Condition.code.coding:sct",
+        "Condition.code.coding:icd10"
+      ]
+    },
+    "Condition.code.coding:sct": {
+      "parent": "Condition.code",
+      "viewDefinition": {
+        "forEachOrNull": "coding.where(system = 'http://snomed.info/sct')",
+        "select": [
+          {
+            "column": [
+              {
+                "name": "sct",
+                "path": "code"
+              }
+            ]
+          }
+        ]
+      },
+      "children": []
+    },
+    "Condition.code.coding:icd10": {
+      "parent": "Condition.code",
+      "viewDefinition": {
+        "forEachOrNull": "coding.where(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm')",
+        "select": [
+          {
+            "column": [
+              {
+                "name": "icd",
+                "path": "code"
+              }
+            ]
+          }
+        ]
+      },
+      "children": []
+    }
+  }
+}
+````
+
+# Rules - Implementation:
+## How to use this lookup format:
+**Rules**
+1. The element of interest musst be inserted into the ``parent.viewDefinition.select`` array of its parent. 
+    - the other children of the parent, if any present, do not need to be inserted. 
+2. If the element of interest has ``children`` defined(`children is not None and len(children) > 0`), all children should be inserted into the ``element.viewDefinition.select``.
+
+**Recommendations:** 
+1. Start building the viewDefinition ascending from level 0 (root node). By processing parent elements first, their children will already be included and do not need any further processing
+
 
 # Rules - Structures:
 ### Slices:
@@ -66,10 +158,11 @@ Example:
   - Slices can be defined by ``fixed`` `pattern` and `bindings`. See ``coding`` for further detail.
 - Instances of slices which are not mentioned in the Profile should be ignored
   - Special case: If code and system are defined by a pattern, meaning the expectation is exactly this code-system combination
-- If no slice is defined in the profile => create columns ``el-code, el-system``
+- If no slice is defined in the profile => create columns ``el-code, el-system`` Example: Labor: ``Observation.code`` (treat like slice binding)
 - (see Coding)
+- If binding without slicing => treat like slicing (even preferred)
 
-> Folder with examples: [condition-slice](conditioclearn-slice)
+> Folder with examples: [condition-slice](condition-slice)
 
 <details>
 <summary>Run examples directly</summary>
@@ -104,6 +197,14 @@ bash ./request-flattening.sh condition-slice/viewDefinition-1.json condition-sli
 <summary>Run the examples</summary>
 
 Using nested selects, the best approach so far
+- Caveat, this way relation to parent backbone lost. Example multiple codings in different summary elements:
+Condition/cond-1,summary-system-A,summary-code-1        < summary 1
+Condition/cond-1,summary-system-D,summary-code-3-1      < summary 2   => relation lost, unless another attr added which is same for both (summary.type)
+Condition/cond-1,summary-system-E,summary-code-3-2      < summary 2
+
+When selecting Condition.stage.summary => look for parent and insert into select of parent. 
+
+
 ```bash
 bash ./request-flattening.sh backbone-parent/testSelectField-viewDefinition.json backbone-parent/condition.json
 ```
@@ -125,13 +226,15 @@ bash ./request-flattening.sh backbone-parent/viewDefinition2.json backbone-paren
 ### Cardinality
 - The Profile defines the cardinality for each element with min/max.
   - if el.max == * : for each instance create a row
-  - if el.max == 1 : NO NEED FOR FOREACH???
+  - if el.max == 1 : there is no need for a FOREACH.
 - Keep in mind that elements can have children, each with cardinality MANY. This should be handled by implementation
+- 
 
 ### Extensions 
 - Extensions contain a `url` and ``value``. The ``url`` should be used to create the column name. 
 - Extensions should be flattened according to the type of the ``value`` element
 - Extensions containing extensions should be flattened to the side. Create a column for each level.
+- Good example: Encounter.extension
 
 ### Polymorphic elements
 - Polymorphic elements should be rendered as the specified type defines
@@ -171,7 +274,7 @@ bash ./request-flattening.sh datatypes/CodeableConcept/obs-view.json datatypes/C
   - fixed
   - pattern
   - also note that the cardinality of the coding does matter ??
-- In the rare case that an instance contains codings with the same codesystem, see the example in ``/condition-slice``
+- In the rare case that an instance contains codings with the same codesystem explode downwards, see the example in ``/condition-slice``
 - If no slice is defined create 2 columns ```el-code,el-code``` and fill in if any code+system exists in the instance data
 
 > Folder with examples: [datatypes/Coding](datatypes/Coding)

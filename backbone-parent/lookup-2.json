@@ -13,6 +13,7 @@
       ]
     },
     "Condition.stage.summary": {
+      "parent": "Condition.stage",
       "viewDefinition": {
         "forEach": "summary.coding",
         "select": [
@@ -32,6 +33,7 @@
       }
     },
     "Condition.stage.type": {
+      "parent": "Condition.stage",
       "viewDefinition": {
         "forEach": "type.coding",
         "select": [
